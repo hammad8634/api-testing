@@ -44,8 +44,14 @@ const Signup = () => {
     result = await result.json();
     console.warn("Result", result);
 
-    localStorage.setItem("user", JSON.stringify(result));
-    navigate("/profile");
+    if (result.status === "success") {
+      let res = localStorage.setItem("user", JSON.stringify(result));
+      navigate("/profile");
+    }
+    else{
+      console.log("Please Enter Correct Details");
+
+    }
 
     setName("");
     setEmail("");
