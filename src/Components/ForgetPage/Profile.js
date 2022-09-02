@@ -1,41 +1,47 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Profile = () => {
   const tokenstring = localStorage.getItem("user");
   const usertoken = JSON.parse(tokenstring).token;
-  // const [fname, setFName] = useState("");
-  const [respData, setRespData] = useState("");
-  let response;
-  let responseData;
+  const [respData, setRespData] = useState([]);
 
-  console.log("usertoken: ", usertoken);
-  console.log(`user ${usertoken}`);
-  // console.log(usertoken.data);
+  // console.log("usertoken: ", usertoken);
 
-  async function getprofile() {
-    try {
-      response = await axios
-        .get("https://massab-hammad.herokuapp.com/api1/users/getme", {
-          headers: { Authorization: `Bearer ${usertoken}` },
-        })
-        .then();
-      // responseData = await response.json();
-      // setRespData(responseData.data.data);
-    } catch (err) {
-      console.log("profile error: ", err);
-    }
-  }
-  console.log("Resp: ", response);
   useEffect(() => {
+    const getprofile = async () => {
+      let response;
+      let responseData;
+      try {
+        response = await fetch(
+          "https://massab-hammad.herokuapp.com/api1/users/getme",
+          {
+            
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${usertoken}`,
+            },
+          }
+        ).then();
+        responseData = await response.json();
+        console.log("Ress: "  ,responseData);
+
+        setRespData(responseData.data.data);
+      } catch (err) {
+        console.log("profile error: ", err);
+      }
+    };
     getprofile();
   });
+
   return (
     <>
       <div>
-        <p>{respData.name}</p>
+        <br />
+        <p><b>Name is:</b> {respData.name}</p>
+        <p><b>Email is:</b> {respData.email}</p>
+        
       </div>
-      ;
     </>
   );
 };

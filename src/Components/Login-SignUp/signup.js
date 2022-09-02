@@ -15,7 +15,7 @@ const Signup = () => {
   useEffect(() => {
     const auth = localStorage.getItem("user");
     if (auth) {
-      navigate("/");
+      navigate("/profile");
     }
   }, [navigate]);
 
@@ -36,21 +36,15 @@ const Signup = () => {
         body: JSON.stringify(data),
       }
     );
-    // .then((result) => {
-    //   result.json().then((data) => {
-    //     console.warn("response", data);
-    //   });
-    // });
     result = await result.json();
     console.warn("Result", result);
 
     if (result.status === "success") {
       let res = localStorage.setItem("user", JSON.stringify(result));
+      // console.log("Signup: ", res);
       navigate("/profile");
-    }
-    else{
+    } else {
       console.log("Please Enter Correct Details");
-
     }
 
     setName("");

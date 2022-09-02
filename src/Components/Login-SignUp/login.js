@@ -41,7 +41,7 @@ const Login = () => {
     // localStorage.setItem("user", JSON.stringify(result));
     // navigate("/profile");
 
-    if (result.status !== "failed") {
+    if (result.status === "success") {
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/profile");
     }
